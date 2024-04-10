@@ -1,5 +1,5 @@
-$color: #2493f1;
+@use 'base' as *;
 
 body {
-    background-color: $color;
+    background-color: $bgcolor;
 }
