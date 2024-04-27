@@ -1,19 +1,14 @@
-const{ src, dest, watch } = require('gulp');
+const gulp = require('gulp');
 const sass = require('gulp-sass')(require('sass'));
 
-function css( done ) {
-    src('src/scss/**/*.scss')        // Identificar el archivo SASS
-        .pipe( sass() )             // Compilarlo
-        .pipe( dest('build/css') )  // Almacenarla en el disco duro
-
-    done(); // Callback que avisa a gulp cuando llegamos al final
+function compileSass() {
+    return gulp.src('src/scss/**/*.scss') // Path to your SCSS files
+      .pipe(sass().on('error', sass.logError))
+      .pipe(gulp.dest('build/css')); // Output directory for CSS files
 }
 
-function dev(done) {
-
-    watch("src/scss/**/*.scss", css) // Cuando cambia app.scss ejecuta la funcion css
-    done();
+function watchSass() {
+    gulp.watch('src/scss/**/*.scss', compileSass);
 }
 
-exports.css = css;
-exports.dev = dev;
+gulp.task("dev", watchSass);
